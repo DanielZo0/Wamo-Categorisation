@@ -117,7 +117,7 @@ def main():
             else:
                 print("\nInvalid file path(s) provided.")
                 input("\nPress Enter to exit...")
-                return
+                sys.exit(0)
         else:
             # No arguments - open file dialog
             statement_paths = select_files()
@@ -125,7 +125,7 @@ def main():
             if not statement_paths:
                 print("\nNo files selected. Exiting.")
                 input("\nPress Enter to exit...")
-                return
+                sys.exit(0)
         
         print(f"\n{len(statement_paths)} file(s) selected")
         print("="*60)
@@ -201,13 +201,18 @@ def main():
             except Exception as e:
                 print(f"Could not open file location: {e}")
         
+        # Exit after completion
+        sys.exit(0)
+        
     except KeyboardInterrupt:
         print("\n\nInterrupted by user.")
+        sys.exit(0)
     except Exception as e:
         print(f"\nUnexpected error: {e}")
         import traceback
         traceback.print_exc()
         input("\nPress Enter to exit...")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
