@@ -73,9 +73,9 @@ def process_statement(statement_path, output_path):
     file_type = detect_file_type(statement_path)
     
     if file_type == 'pdf':
-        script = 'wamo_categorization.py'
+        script = 'pdf_statement_processor.py'
     elif file_type == 'csv':
-        script = 'bov_categorization.py'
+        script = 'csv_statement_processor.py'
     else:
         print(f"  [ERROR] Unsupported file type: {Path(statement_path).suffix}")
         return False
@@ -157,28 +157,27 @@ def main():
             for output_file in output_files:
                 print(f"  - {output_file}")
             
-            # Ask if user wants to open the first file
-            if successful == 1:
-                open_msg = "\nWould you like to open the output file? (Y/n): "
-            else:
-                open_msg = "\nWould you like to open the first output file? (Y/n): "
-            
-            open_file = input(open_msg).strip().lower()
-            if not open_file or open_file in ['y', 'yes']:
-                try:
-                    if sys.platform == 'win32':
-                        os.startfile(output_files[0])
-                    elif sys.platform == 'darwin':  # macOS
-                        subprocess.run(['open', output_files[0]])
-                    else:  # linux
-                        subprocess.run(['xdg-open', output_files[0]])
-                    print("Opening file...")
-                except Exception as e:
-                    print(f"Could not open file automatically: {e}")
-                    print(f"Please open manually: {output_files[0]}")
+            # Get the directory of the first output file
+            output_dir = str(Path(output_files[0]).parent)
+            print(f"\nOutput location: {output_dir}")
         
         print("\n" + "="*60)
-        input("\nPress Enter to exit...")
+        input("\nPress Enter to open file location and exit...")
+        
+        # Open file explorer to the output location
+        if output_files:
+            try:
+                if sys.platform == 'win32':
+                    # Windows: Open explorer and select the first file
+                    subprocess.run(['explorer', '/select,', str(Path(output_files[0]).resolve())])
+                elif sys.platform == 'darwin':  # macOS
+                    # macOS: Open Finder and select the file
+                    subprocess.run(['open', '-R', output_files[0]])
+                else:  # linux
+                    # Linux: Open file manager to the directory
+                    subprocess.run(['xdg-open', output_dir])
+            except Exception as e:
+                print(f"Could not open file location: {e}")
         
     except KeyboardInterrupt:
         print("\n\nInterrupted by user. Goodbye!")

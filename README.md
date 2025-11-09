@@ -35,19 +35,19 @@ pip install -r requirements.txt
 
 ### Quick Start (Windows)
 
-**Double-click `Categorize Statement.bat`**
+**Double-click `Process Statements.bat`**
 
 The tool will:
 1. Open a file selection dialog
 2. Let you select one or more statements (PDF or CSV)
 3. Automatically process all selected files
 4. Save results in the same directory as input files
-5. Offer to open the first result
+5. Open file explorer to the output location when you press Enter
 
 ### Command Line (All Platforms)
 
 ```bash
-python categorize_statement.py
+python batch_statement_processor.py
 ```
 
 The tool immediately opens a file browser where you can:
@@ -61,12 +61,12 @@ For automation or scripting, call the processors directly:
 
 **PDF Statements:**
 ```bash
-python wamo_categorization.py statement.pdf output.xlsx
+python pdf_statement_processor.py statement.pdf output.xlsx
 ```
 
 **CSV Statements:**
 ```bash
-python bov_categorization.py statement.csv output.xlsx
+python csv_statement_processor.py statement.csv output.xlsx
 ```
 
 ## Output
@@ -197,11 +197,11 @@ Would you like to open the first output file? (Y/n):
 ## Project Structure
 
 ```
-├── categorize_statement.py      # Main UI - batch file selector
-├── Categorize Statement.bat      # Windows launcher
+├── batch_statement_processor.py  # Main UI - batch file selector
+├── Process Statements.bat        # Windows launcher
 ├── common_categorization.py      # Shared categorization logic
-├── wamo_categorization.py        # PDF statement processor
-├── bov_categorization.py         # CSV statement processor
+├── pdf_statement_processor.py    # PDF statement processor
+├── csv_statement_processor.py    # CSV statement processor
 ├── requirements.txt              # Python dependencies
 └── README.md                     # This file
 ```

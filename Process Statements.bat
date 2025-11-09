@@ -1,8 +1,8 @@
 @echo off
-REM Bank Statement Categorization Tool
-REM Double-click to categorize your bank statements
+REM Bank Statement Batch Processor
+REM Double-click to process your bank statements
 
-title Bank Statement Categorization
+title Statement Processor
 
 REM Check if Python is installed
 python --version >nul 2>&1
@@ -15,6 +15,6 @@ if errorlevel 1 (
     exit /b 1
 )
 
-REM Run the categorization tool
-python categorize_statement.py
+REM Run the batch processor
+python batch_statement_processor.py
 
