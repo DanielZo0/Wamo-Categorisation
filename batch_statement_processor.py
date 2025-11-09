@@ -119,13 +119,28 @@ def main():
     Main function with simplified workflow
     """
     try:
-        # Immediately open file dialog
-        statement_paths = select_files()
-        
-        if not statement_paths:
-            print("\nNo files selected. Exiting.")
-            input("\nPress Enter to exit...")
-            sys.exit(0)
+        # Check if files were passed as command-line arguments (e.g., double-clicked a PDF)
+        if len(sys.argv) > 1:
+            # Files were passed as arguments - use them directly
+            statement_paths = [arg for arg in sys.argv[1:] if Path(arg).exists()]
+            
+            if statement_paths:
+                print("\n" + "="*60)
+                print("  BANK STATEMENT CATEGORISATION TOOL")
+                print("="*60)
+                print(f"\nProcessing {len(statement_paths)} file(s) passed as arguments")
+            else:
+                print("\nInvalid file path(s) provided.")
+                input("\nPress Enter to exit...")
+                sys.exit(0)
+        else:
+            # No arguments - open file dialog
+            statement_paths = select_files()
+            
+            if not statement_paths:
+                print("\nNo files selected. Exiting.")
+                input("\nPress Enter to exit...")
+                sys.exit(0)
         
         print(f"\n{len(statement_paths)} file(s) selected")
         print("="*60)
