@@ -22,8 +22,8 @@ Automated transaction categorization tool for bank statements. Processes PDF and
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/DanielZo0/Wamo-Categorisation.git
-cd Wamo-Categorisation
+git clone https://github.com/DanielZo0/Bank-Statement-Categorization.git
+cd Bank-Statement-Categorization
 ```
 
 2. Install required dependencies:
