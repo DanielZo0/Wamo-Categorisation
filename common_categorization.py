@@ -128,43 +128,41 @@ def get_transaction_type(detail: str) -> str:
     
     # Transfers
     if re.search(r'sent money to', detail_lower):
-        return "outgoing transfer"
+        return "transfer"
     if re.search(r'received money from', detail_lower):
-        return "incoming transfer"
+        return "transfer"
     if re.search(r'account to account', detail_lower):
-        return "account transfer"
+        return "transfer"
     if re.search(r'transfer between own accounts', detail_lower):
         return "internal transfer"
     if re.search(r'sct inwards', detail_lower):
-        return "incoming sct transfer"
+        return "transfer"
     if re.search(r'sct outwards', detail_lower):
-        return "outgoing sct transfer"
+        return "transfer"
     if re.search(r'instant payments inwards', detail_lower):
-        return "instant payment in"
+        return "transfer"
     if re.search(r'instant payment', detail_lower):
-        return "instant payment"
+        return "transfer"
     
     # Cheques
     if re.search(r'cheque.*deposit', detail_lower):
         return "cheque deposit"
     if re.search(r'cheque.*returned', detail_lower):
         return "cheque returned fee"
-    if re.search(r'cheques returned', detail_lower):
-        return "cheque returned"
     if re.search(r'cheque', detail_lower):
         return "cheque payment"
     
     # Fees & charges
     if re.search(r'wise charges', detail_lower):
-        return "transfer fee"
+        return "bank charge"
     if re.search(r'fee', detail_lower):
-        return "bank fee"
+        return "bank charge"
     if re.search(r'charge', detail_lower):
         return "bank charge"
     if re.search(r'administration fee', detail_lower):
-        return "administration fee"
+        return "bank charge"
     if re.search(r'standing instruction charge', detail_lower):
-        return "standing instruction charge"
+        return "bank charge"
     if re.search(r'standing instruction', detail_lower):
         return "standing instruction"
     
@@ -172,27 +170,27 @@ def get_transaction_type(detail: str) -> str:
     if re.search(r'salary', detail_lower):
         return "salary"
     if re.search(r'employment', detail_lower):
-        return "employment payment"
+        return "salary"
     if re.search(r'stipendio|stipend', detail_lower):
-        return "stipend/salary"
+        return "salary"
     
     # Loans & repayments
     if re.search(r'repayment.*principal', detail_lower):
-        return "loan principal repayment"
+        return "loan"
     if re.search(r'repayment.*interest', detail_lower):
-        return "loan interest repayment"
+        return "loan"
     if re.search(r'loan', detail_lower):
         return "loan"
     
     # Taxes & government
     if re.search(r'tax', detail_lower):
-        return "tax payment"
+        return "government"
     if re.search(r'vat', detail_lower):
-        return "vat payment"
+        return "government"
     if re.search(r'customs', detail_lower):
-        return "customs payment"
+        return "government"
     if re.search(r'government|gov', detail_lower):
-        return "government payment"
+        return "government"
     
     # ATM deposits
     if re.search(r'atm.*cash.*deposit', detail_lower):
@@ -200,33 +198,33 @@ def get_transaction_type(detail: str) -> str:
     
     # 24x7 payments
     if re.search(r'24x7 pay', detail_lower):
-        return "third party payment"
+        return "payment"
     if re.search(r'24x7 bill', detail_lower):
-        return "bill payment"
+        return "payment"
     if re.search(r'24x7 mobile pay', detail_lower):
-        return "mobile payment"
+        return "payment"
     
     # Direct debits
     if re.search(r'sdd outwards', detail_lower):
-        return "direct debit out"
+        return "payment"
     
     # Insurance
     if re.search(r'mapfre|msv life|insurance', detail_lower):
-        return "insurance payment"
+        return "insurance"
     
     # Retail / food / hospitality
     if re.search(r'hotel', detail_lower):
-        return "hotel payment"
+        return "payment"
     if re.search(r'catering', detail_lower):
-        return "catering payment"
+        return "payment"
     if re.search(r'butcher|food|supermarket|restaurant|eat', detail_lower):
-        return "food & retail"
+        return "payment"
     if re.search(r'retail', detail_lower):
-        return "retail payment"
+        return "payment"
     
     # Utilities
     if re.search(r'electricity|water|gas|utility', detail_lower):
-        return "utility payment"
+        return "utility bill"
     
     # Misc
     if re.search(r'cashback|balance_cashback', detail_lower):

@@ -10,6 +10,10 @@ from pathlib import Path
 from tkinter import Tk, filedialog
 import subprocess
 
+# Import processor modules directly (for executable compatibility)
+import pdf_statement_processor
+import csv_statement_processor
+
 
 def select_files():
     """
@@ -71,31 +75,56 @@ def get_output_path(input_path):
 
 def process_statement(statement_path, output_path):
     """
-    Process the statement using the appropriate script
+    Process the statement using the appropriate processor module
     """
     file_type = detect_file_type(statement_path)
     
-    if file_type == 'pdf':
-        script = 'pdf_statement_processor.py'
-    elif file_type == 'csv':
-        script = 'csv_statement_processor.py'
-    else:
+    if file_type not in ['pdf', 'csv']:
         print(f"  [ERROR] Unsupported file type: {Path(statement_path).suffix}")
         return False
     
-    # Run the appropriate categorization script
+    # Process the file directly by calling the processor functions
     try:
-        result = subprocess.run(
-            [sys.executable, script, statement_path, output_path],
-            check=True,
-            capture_output=False
-        )
+        if file_type == 'pdf':
+            # Process PDF statement
+            print(f"Extracting transactions from PDF...")
+            df = pdf_statement_processor.extract_transactions_from_pdf(statement_path)
+            
+            if df.empty:
+                print("  [ERROR] No transactions found in PDF")
+                return False
+            
+            print(f"Found {len(df)} transactions")
+            print("Categorizing transactions...")
+            incoming_df, outgoing_df = pdf_statement_processor.process_transactions(df)
+            print(f"  Incoming: {len(incoming_df)} transactions")
+            print(f"  Outgoing: {len(outgoing_df)} transactions")
+            print("Exporting to Excel...")
+            pdf_statement_processor.export_to_excel(df, incoming_df, outgoing_df, output_path)
+            
+        elif file_type == 'csv':
+            # Process CSV statement
+            print(f"Extracting transactions from CSV...")
+            df = csv_statement_processor.extract_transactions_from_csv(statement_path)
+            
+            if df.empty:
+                print("  [ERROR] No transactions found in CSV")
+                return False
+            
+            print(f"Found {len(df)} transactions")
+            print("Categorizing transactions...")
+            incoming_df, outgoing_df = csv_statement_processor.process_transactions(df)
+            print(f"  Incoming: {len(incoming_df)} transactions")
+            print(f"  Outgoing: {len(outgoing_df)} transactions")
+            print("Exporting to Excel...")
+            csv_statement_processor.export_to_excel(df, incoming_df, outgoing_df, output_path)
+        
         return True
-    except subprocess.CalledProcessError as e:
+        
+    except Exception as e:
         print(f"  [ERROR] Processing failed: {e}")
-        return False
-    except FileNotFoundError:
-        print(f"  [ERROR] Could not find {script}")
+        import traceback
+        traceback.print_exc()
         return False
 
 
