@@ -216,4 +216,17 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except SystemExit as e:
+        # Normal exit requested - don't restart
+        import os
+        os._exit(e.code if hasattr(e, 'code') and e.code is not None else 0)
+    except KeyboardInterrupt:
+        # User interrupted - exit cleanly
+        import os
+        os._exit(0)
+    except Exception:
+        # Unexpected error - exit with error code
+        import os
+        os._exit(1)
