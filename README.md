@@ -74,22 +74,30 @@ The script automatically recognizes and categorizes:
 ## Example
 
 ```bash
-python wamo_categorization.py statement_7068982_EUR_2025-06-01_2025-09-30.pdf
+python wamo_categorization.py statement_7068982_EUR_2025-06-01_2025-09-30.pdf output.xlsx
 ```
 
 Output:
 ```
 Processing: statement_7068982_EUR_2025-06-01_2025-09-30.pdf
 Extracting transactions from PDF...
-Found 145 transactions
+Found 59 transactions
 Categorizing transactions...
-  Incoming: 23 transactions
-  Outgoing: 122 transactions
+  Incoming: 10 transactions
+  Outgoing: 49 transactions
 Exporting to Excel...
-Excel file created: categorized_statement.xlsx
+Excel file created: output.xlsx
 
-Complete! Output saved to: categorized_statement.xlsx
+Complete! Output saved to: output.xlsx
 ```
+
+The script successfully:
+- Extracted 59 transactions from a 4-page Wamo PDF statement
+- Identified 10 incoming transactions (payments received, cashback)
+- Identified 49 outgoing transactions (card payments, transfers, fees)
+- Categorized all transactions by type
+- Extracted counterparty information (merchants, recipients)
+- Applied month-based color coding for easy visual analysis
 
 ## Requirements
 
