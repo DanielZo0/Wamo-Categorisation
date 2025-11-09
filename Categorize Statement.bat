@@ -1,8 +1,8 @@
 @echo off
-REM Bank Statement Categorization Tool Launcher
-REM Double-click this file to start the categorization tool
+REM Bank Statement Categorization Tool
+REM Double-click to categorize your bank statements
 
-title Bank Statement Categorization Tool
+title Bank Statement Categorization
 
 REM Check if Python is installed
 python --version >nul 2>&1
@@ -15,13 +15,6 @@ if errorlevel 1 (
     exit /b 1
 )
 
-REM Run the categorization script
+REM Run the categorization tool
 python categorize_statement.py
-
-REM Keep window open on error
-if errorlevel 1 (
-    echo.
-    echo An error occurred. Press any key to exit...
-    pause >nul
-)
 
